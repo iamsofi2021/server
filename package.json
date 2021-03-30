@@ -1,0 +1,17 @@
+{
+  "name": "sofi",
+  "version": "1.0.0",
+  "description": "Sofi Accessories",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./app.js localhost 8000",
+    "start": "node app.js"
+  },
+  "author": "paletskykh_mykyta",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
