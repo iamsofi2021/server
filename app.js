@@ -9,7 +9,7 @@ app.get('*', function(req, res) {
     res.sendFile(`${__dirname}/client/dist/public/index.html`);
 });
 
-const port = process.env.port || 8000;
+const port = process.env.port || 8080;
 app.listen(port, () => {
     console.log(`Express server listening on port ${port}`);
 });
