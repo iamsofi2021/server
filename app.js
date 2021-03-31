@@ -27,7 +27,7 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
-app.post('/upload', upload.array('file', 1), (req, res) => {
+app.post('/upload', upload.array('image', 1), (req, res) => {
     res.json({
         'message': 'File uploaded succesfully.'
     });
