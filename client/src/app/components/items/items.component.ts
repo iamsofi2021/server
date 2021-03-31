@@ -27,8 +27,10 @@ export class ItemsComponent implements OnInit {
 
   uploadFileToActivity() {
     const formData: FormData = new FormData();
-    formData.append(this.file.name, this.file, this.file.name);
+    formData.append('image', this.file, this.file.name);
 
-    this.http.post<any>('/upload', formData).subscribe(() => console.log('ok'));
+    this.http.post<any>('/upload', formData).subscribe((response) => {
+      console.log('response received is ', response);
+  });
   }
 }

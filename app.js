@@ -27,9 +27,11 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
-app.post('/upload', jsonParser, function(req, res) {
-    uploadFile(req);
-    res.status(200).send('suxxec');
+app.post('/upload',jsonParser, (req, res) => {
+    uploadFile(req.files.image);
+    res.json({
+        'message': 'File uploaded succesfully.'
+    });
 });
 
 app.get('*', function(req, res) {
