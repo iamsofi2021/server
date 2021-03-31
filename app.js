@@ -28,7 +28,8 @@ app.post('/users', jsonParser, function(req, res) {
 });
 
 app.post('/upload', jsonParser, function(req, res) {
-    res.status(200).send(uploadFile(req));
+    uploadFile(req);
+    res.status(200).send('suxxec');
 });
 
 app.get('*', function(req, res) {
