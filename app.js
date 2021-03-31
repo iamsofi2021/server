@@ -18,7 +18,7 @@ connect()
 
 //S3
 
-const {uploadFile} = require('./s3');
+const {upload} = require('./s3');
 
 //API
 app.post('/users', jsonParser, function(req, res) {
@@ -27,8 +27,7 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
-app.post('/upload',jsonParser, (req, res) => {
-    uploadFile(req.files.image);
+app.post('/upload', upload.array('file', 1), (req, res) => {
     res.json({
         'message': 'File uploaded succesfully.'
     });

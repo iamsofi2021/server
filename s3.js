@@ -1,27 +1,33 @@
 const aws = require('aws-sdk');
-const S3 = require('aws-sdk/clients/s3');
-const fs = require('fs');
-const s3 = new S3({
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+
+aws.config.update({
     accessKeyId: process.env.s3_id,
-    secretAccessKey: process.env.s3_key
+    secretAccessKey: process.env.s3_key,
+    region: process.env.region
 });
 
-const uploadFile = (file) => {
-    const fileContent = fs.readFileSync(file);
-
-    const params = {
-        Bucket: process.env.s3_bucketname,
-        Key: file.name,
-        Body: fileContent
-    };
-
-    // Uploading files to the bucket
-    s3.upload(params, function(err, data) {
-        if (err) {
-            throw err
+const s3 = new aws.S3();
+const upload = multer({
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === 'application/octet-stream' || file.mimetype === 'video/mp4'
+            || file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+            cb(null, true);
+        } else {
+            cb(new Error('Invalid file type'), false);
         }
-        console.log(`File uploaded successfully. ${data.Location}`)
-    });
-};
+    },
+    storage: multerS3({
+        acl: 'public-read',
+        s3,
+        bucket: 'YOUR BUCKET-NAME',
+        key: function (req, file, cb) {
+            req.file = Date.now() + file.originalname;
+            cb(null, Date.now() + file.originalname);
+        }
+    })
+});
 
-module.exports.uploadFile = uploadFile;
+
+module.exports.upload = upload;
