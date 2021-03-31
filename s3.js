@@ -7,22 +7,21 @@ const s3 = new S3({
 });
 
 const uploadFile = (file) => {
-    return file;
-    // const fileContent = fs.readFileSync(fileName);
+    const fileContent = fs.readFileSync(file);
 
-    // const params = {
-    //     Bucket: process.env.s3_bucketname,
-    //     Key: 'cat.jpg',
-    //     Body: fileContent
-    // };
+    const params = {
+        Bucket: process.env.s3_bucketname,
+        Key: file.name,
+        Body: file
+    };
 
-    // // Uploading files to the bucket
-    // s3.upload(params, function(err, data) {
-    //     if (err) {
-    //         throw err
-    //     }
-    //     console.log(`File uploaded successfully. ${data.Location}`)
-    // });
+    // Uploading files to the bucket
+    s3.upload(params, function(err, data) {
+        if (err) {
+            throw err
+        }
+        console.log(`File uploaded successfully. ${data.Location}`)
+    });
 };
 
 module.exports.uploadFile = uploadFile;

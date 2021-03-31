@@ -29,6 +29,6 @@ export class ItemsComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append(this.file.name, this.file, this.file.name);
 
-    this.http.post<any>('/upload', formData).subscribe(file => console.log(file));
+    this.http.post<any>('/upload', formData).subscribe(() => console.log('ok'));
   }
 }
