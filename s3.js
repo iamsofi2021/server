@@ -1,6 +1,7 @@
 const aws = require('aws-sdk');
+const S3 = require('aws-sdk/clients/s3');
 const fs = require('fs');
-const s3 = new aws.s3({
+const s3 = new S3({
     accessKeyId: process.env.s3_id,
     secretAccessKey: process.env.s3_key
 });
