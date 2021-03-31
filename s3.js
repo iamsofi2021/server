@@ -12,7 +12,7 @@ const uploadFile = (file) => {
     const params = {
         Bucket: process.env.s3_bucketname,
         Key: file.name,
-        Body: file
+        Body: fileContent
     };
 
     // Uploading files to the bucket
