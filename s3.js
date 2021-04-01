@@ -31,7 +31,7 @@ const upload = multer({
 
 const fetchFiles = () => {
     s3.listObjects({
-        bucket: process.env.s3_bucketname
+        Bucket: process.env.s3_bucketname
     }, function(err, data) {
         if (err) {
             console.log("Error images", err);
