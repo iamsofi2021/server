@@ -33,8 +33,7 @@ app.post('/get-list', function(req, res) {
     });
 });
 
-app.post('/get-image', function(req, res) {
-    console.log(req.body);
+app.post('/get-image',jsonParser, function(req, res) {
     getImage(req.body.key).then(image => {
         res.status(200).send(image);
     });
