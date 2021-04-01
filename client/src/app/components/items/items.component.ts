@@ -8,7 +8,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ItemsComponent implements OnInit {
 
-  file: File = {} as File;
+  item: any;
+  item2: any;
+  images: any;
 
   constructor(private http: HttpClient) { }
 
@@ -22,12 +24,12 @@ export class ItemsComponent implements OnInit {
 
   handleFileInput(e: Event) {
     const fileInput: HTMLInputElement = e.target as HTMLInputElement;
-    this.file = Array.from(fileInput.files as FileList)[0];
+    this.item = Array.from(fileInput.files as FileList)[0];
   }
 
   uploadFileToActivity() {
     const formData: FormData = new FormData();
-    formData.append('image', this.file, this.file.name);
+    formData.append('image', this.item, this.item.name);
 
     this.http.post<any>('/upload', formData).subscribe((response) => {
       console.log('response received is ', response);
@@ -35,6 +37,10 @@ export class ItemsComponent implements OnInit {
   }
 
   fetch() {
-    this.http.post<any>('/fetch-images', {}).subscribe(images => console.log(images));
+    this.http.post<any>('/get-list', {}).subscribe(images => this.images = images);
+  }
+
+  show() {
+    this.http.post<any>('/get-image', {key: this.images[0].Key}).subscribe(image => this.item2 = image.data);
   }
 }

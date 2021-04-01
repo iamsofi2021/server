@@ -18,7 +18,7 @@ connect()
 
 //S3
 
-const {upload, fetchFiles} = require('./s3');
+const {upload, getList, getImage} = require('./s3');
 
 //API
 app.post('/users', jsonParser, function(req, res) {
@@ -27,9 +27,15 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
-app.post('/fetch-images', function(req, res) {
-    fetchFiles().then(images => {
+app.post('/get-list', function(req, res) {
+    getList().then(images => {
         res.status(200).send(images);
+    });
+});
+
+app.post('/get-image', function(req, res) {
+    getImage(req.body.key).then(image => {
+        res.status(200).send(image);
     });
 });
 

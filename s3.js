@@ -29,20 +29,38 @@ const upload = multer({
     })
 });
 
-const fetchFiles = () => {
-    var p = new Promise(function(resolve, reject){
-        s3.listObjects({Bucket: process.env.s3_bucketname}, function(err, data) {
-         if (err) { 
-          return reject(err);
-         }
-      
-         resolve(data.Contents);
+const getList = () => {
+    var p = new Promise(function (resolve, reject) {
+        s3.listObjects({ Bucket: process.env.s3_bucketname }, function (err, data) {
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(data.Contents);
         });
-       });
-      
+    });
+
+    return p;
+}
+
+const getImage = (key) => {
+    var p = new Promise(function (resolve, reject) {
+        s3.getObject({ Bucket: process.env.s3_bucketname, Key: key }, function (err, data) {
+            if (err) {
+                return reject(err);
+            }
+
+            resolve({
+                data: data.Body,
+                mimetype: data.ContentType
+            });
+        });
+    });
+
     return p;
 }
 
 
 module.exports.upload = upload;
-module.exports.fetchFiles = fetchFiles;
+module.exports.getList = getList;
+module.exports.getImage = getImage;

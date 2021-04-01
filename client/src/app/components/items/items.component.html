@@ -6,3 +6,8 @@
 <input type="file" (change)="handleFileInput($event)" multiple>
 <button (click)="uploadFileToActivity()">Upload</button>
 <button (click)="fetch()">Fetch</button>
+<button (click)="show()">Show Image</button>
+
+<br>
+
+<app-item *ngIf="item2" [item]="item2"></app-item>
