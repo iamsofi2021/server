@@ -26,7 +26,9 @@ const upload = multer({
             req.file = Date.now() + file.originalname;
             cb(null, Date.now() + file.originalname);
         },
-        contentType: file.mimetype
+        contentType: function (req, file, cb) {
+            cb(null, file.mimetype);
+        }
     })
 });
 
