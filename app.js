@@ -34,7 +34,7 @@ app.post('/get-list', function(req, res) {
 });
 
 app.post('/get-image', function(req, res) {
-    console.log(req);
+    console.log(req.body);
     getImage(req.body.key).then(image => {
         res.status(200).send(image);
     });
