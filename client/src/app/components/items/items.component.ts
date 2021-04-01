@@ -41,6 +41,6 @@ export class ItemsComponent implements OnInit {
   }
 
   show() {
-    this.http.post<any>('/get-image', {key: this.images[0].Key}).subscribe(image => this.item2 = image.data);
+    this.http.post<any>('/get-image', {key: this.images[0].Key}).subscribe(item => this.item2 = item);
   }
 }

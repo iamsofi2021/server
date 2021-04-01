@@ -50,10 +50,7 @@ const getImage = (key) => {
                 return reject(err);
             }
 
-            resolve({
-                data: data.Body,
-                mimetype: data.ContentType
-            });
+            resolve(data);
         });
     });
 
