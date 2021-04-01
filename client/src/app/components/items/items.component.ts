@@ -33,4 +33,8 @@ export class ItemsComponent implements OnInit {
       console.log('response received is ', response);
   });
   }
+
+  fetch() {
+    this.http.post<any>('/fetch-images', {}).subscribe(images => console.log(images));
+  }
 }

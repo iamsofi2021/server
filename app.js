@@ -18,13 +18,18 @@ connect()
 
 //S3
 
-const {upload} = require('./s3');
+const {upload, fetchFiles} = require('./s3');
 
 //API
 app.post('/users', jsonParser, function(req, res) {
     Users.find({}, (err, users) => {
         res.status(200).send(users);
     });
+});
+
+app.post('/fetch-images', (req, res) => {
+    const files = fetchFiles();
+    res.status(200).send(files);
 });
 
 app.post('/upload', upload.array('image', 1), (req, res) => {
