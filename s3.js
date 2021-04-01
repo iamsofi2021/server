@@ -34,9 +34,10 @@ const fetchFiles = () => {
         bucket: process.env.s3_bucketname
     }, function(err, data) {
         if (err) {
-          console.log("Error", err);
+            console.log("Error images", err);
         } else {
-          return data;
+            console.log(data)
+            return data;
         }
     });
 }
