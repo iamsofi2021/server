@@ -27,9 +27,10 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
-app.post('/fetch-images', (req, res) => {
-    const files = fetchFiles();
-    res.status(200).send(files);
+app.post('/fetch-images', function(req, res) {
+    fetchFiles().then(images => {
+        res.status(200).send(images);
+    });
 });
 
 app.post('/upload', upload.array('image', 1), (req, res) => {

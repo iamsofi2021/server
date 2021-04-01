@@ -30,16 +30,17 @@ const upload = multer({
 });
 
 const fetchFiles = () => {
-    s3.listObjects({
-        Bucket: process.env.s3_bucketname
-    }, function(err, data) {
-        if (err) {
-            console.log("Error images", err);
-        } else {
-            console.log(data)
-            return data;
-        }
-    });
+    var p = new Promise(function(resolve, reject){
+        s3.listObjects({Bucket: process.env.s3_bucketname}, function(err, data) {
+         if (err) { 
+          return reject(err);
+         }
+      
+         resolve(data.Contents);
+        });
+       });
+      
+    return p;
 }
 
 
