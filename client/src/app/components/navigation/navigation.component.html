@@ -1,0 +1,10 @@
+<div class="d-flex flex-wrap">
+  <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }">АКСЕСУАРИ</button>
+  <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['order']">ЗАМОВИТИ</button>
+  <button type="button" class="btn-navi me-auto" routerLinkActive="btn-navi-active" [routerLink]="['contacts']">КОНТАКТИ</button>
+  <div class="d-flex input-group w-auto position-static">
+    <input type="search" class="form-control input-navi-search" placeholder="Шукаємо..." aria-label="Пошук"/>
+    <button class="btn-navi">ПОШУК</button>
+  </div>
+  <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['auth']">ВХІД</button>
+</div>

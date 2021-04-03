@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { ItemComponent } from './components/items/item/item.component';
 import { ItemsComponent } from './components/items/items.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavigationComponent,
     ItemsComponent,
     ItemComponent,
     OrderComponent,

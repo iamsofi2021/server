@@ -1,7 +1,5 @@
-<ul>
-  <li><a routerLinkActive="menu-active" [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }">Товари</a></li>
-  <li><a routerLinkActive="menu-active" [routerLink]="['order']">Замовити</a></li>
-  <li><a routerLinkActive="menu-active" [routerLink]="['contacts']">Контакти</a></li>
-</ul>
-
-<router-outlet></router-outlet>
+<div class="container">
+  <img src="../../../assets/logo.png" class="logo" alt="">
+  <app-navigation></app-navigation>
+  <router-outlet></router-outlet>
+</div>
