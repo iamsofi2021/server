@@ -1,5 +1,9 @@
-import { animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AuthState } from 'src/app/interfaces/auth-state';
+import { selectLogin } from 'src/app/reducers/auth/auth.selectors';
+import { RipplesService } from 'src/app/services/ripples.service';
 
 @Component({
   selector: 'app-navigation',
@@ -8,29 +12,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  public login$: Observable<string> = this.store$.pipe(select(selectLogin));
+
+  constructor(
+    private store$: Store<AuthState>,
+    private rippleService: RipplesService,
+  ) { }
 
   ngOnInit(): void {
-    this.animate();
-  }
-
-  animate(): void {
-    const buttons = document.querySelectorAll('.btn-navi');
-    console.log(buttons);
-    buttons.forEach(btn => {
-      btn.addEventListener('click', (e: any) => {
-        const x = e.clientX - e.target.offsetLeft;
-        const y = e.clientY - e.target.offsetTop;
-
-        const ripples = document.createElement('span');
-        ripples.style.left = x + 'px';
-        ripples.style.top = y + 'px';
-
-        btn.appendChild(ripples);
-        setTimeout(() => {
-          ripples.remove();
-        }, 1000);
-      });
-    });
+    this.rippleService.animate();
   }
 }

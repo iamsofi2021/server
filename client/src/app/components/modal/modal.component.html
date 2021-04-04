@@ -1,0 +1,11 @@
+<div class='modal' (keydown.enter)="accept()" tabindex="1" appAutofocus>
+  <div class='modal-block' [ngClass]="{'modal-block-show': show}">
+    <div class='modal-body'>
+      <span>{{message}}</span>
+    </div>
+    <div class='modal-buttons' [ngClass]="{'modal-two-buttons': isConfirmModal}">
+      <input type="button" value="Ok" (click)="accept()">
+      <input *ngIf="isConfirmModal" type="button" value="Скасувати" (click)="cancel()">
+    </div>
+  </div>
+</div>

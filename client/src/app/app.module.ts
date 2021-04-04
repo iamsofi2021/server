@@ -9,6 +9,16 @@ import { ItemComponent } from './components/items/item/item.component';
 import { ItemsComponent } from './components/items/items.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { OrderComponent } from './components/order/order.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { AuthComponent } from './components/auth/auth.component';
+import { AppEffects } from './app.effects';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +28,26 @@ import { OrderComponent } from './components/order/order.component';
     ItemComponent,
     OrderComponent,
     ContactsComponent,
+    AuthComponent,
+    ModalComponent,
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([AppEffects]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

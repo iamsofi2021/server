@@ -41,3 +41,13 @@
         }
     }
 }
+
+input[type="search" i] {
+    box-shadow: none !important;
+    &::-webkit-search-cancel-button {
+        cursor: pointer;
+        &:focus {
+            border: none;
+        }
+    }
+}

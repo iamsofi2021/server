@@ -1,4 +1,4 @@
-<div class="d-flex flex-wrap">
+<div class="d-flex flex-wrap mb-4">
   <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }">АКСЕСУАРИ</button>
   <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['order']">ЗАМОВИТИ</button>
   <button type="button" class="btn-navi me-auto" routerLinkActive="btn-navi-active" [routerLink]="['contacts']">КОНТАКТИ</button>
@@ -6,5 +6,5 @@
     <input type="search" class="form-control input-navi-search" placeholder="Шукаємо..." aria-label="Пошук"/>
     <button class="btn-navi">ПОШУК</button>
   </div>
-  <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['auth']">ВХІД</button>
+  <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['auth']">{{(login$ | async) || 'ВХІД'}}</button>
 </div>

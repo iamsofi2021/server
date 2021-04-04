@@ -2,27 +2,22 @@
 const mongo = require('mongoose');
 
 async function connect() {
-    mongo.connect(`mongodb+srv://${process.env.userName}:${process.env.userPwd}@cluster0.vfhby.mongodb.net/${process.env.dbName}?retryWrites=true&w=majority`, {
+    // mongo.connect(`mongodb+srv://${process.env.userName}:${process.env.userPwd}@cluster0.vfhby.mongodb.net/${process.env.dbName}?retryWrites=true&w=majority`, {
+    mongo.connect(`mongodb+srv://superadmin_01:Rassa_1001@cluster0.vfhby.mongodb.net/iamsofi?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
 }
 
 const UsersSchema = new mongo.Schema({
-    userName: {
+    login: {
         type: String,
         required: true,
     },
-    userPwd: {
+    password: {
         type: String,
         required: true,
     },
-    phone: {
-        type: String,
-    },
-    mail: {
-        type: String
-    }
 });
 
 const Users = mongo.model('users', UsersSchema);
