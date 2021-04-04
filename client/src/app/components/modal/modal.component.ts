@@ -8,7 +8,9 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalComponent implements OnInit {
   @Input() message = '';
+  @Input() timeOut = false;
   @Input() isConfirmModal = false;
+  @Input() isErrorMsg = false;
 
   show = false;
 
@@ -19,6 +21,11 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.show = true;
+    if (this.timeOut) {
+      setTimeout(() => {
+        this.activeModal.close(false);
+      }, 3000);
+    }
   }
 
   accept(): void {

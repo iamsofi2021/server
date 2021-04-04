@@ -15,5 +15,4 @@ export const reducers: ActionReducerMap<State> = {
   [authNode]: authReducer,
 };
 
-
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+
 import { AuthState } from 'src/app/interfaces/auth-state';
 import { login } from 'src/app/reducers/auth/auth.actions';
-import { RipplesService } from 'src/app/services/ripples.service';
 
 @Component({
   selector: 'app-auth',
@@ -18,11 +18,9 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private store$: Store<AuthState>,
-    private rippleService: RipplesService,
   ){}
 
   ngOnInit(): void {
-    this.rippleService.animate();
   }
 
   submit(): void {

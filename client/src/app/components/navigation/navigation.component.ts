@@ -3,7 +3,6 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthState } from 'src/app/interfaces/auth-state';
 import { selectLogin } from 'src/app/reducers/auth/auth.selectors';
-import { RipplesService } from 'src/app/services/ripples.service';
 
 @Component({
   selector: 'app-navigation',
@@ -16,10 +15,8 @@ export class NavigationComponent implements OnInit {
 
   constructor(
     private store$: Store<AuthState>,
-    private rippleService: RipplesService,
   ) { }
 
   ngOnInit(): void {
-    this.rippleService.animate();
   }
 }
