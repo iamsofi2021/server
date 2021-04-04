@@ -4,18 +4,23 @@ MIT
 @angular/core
 MIT
 
+@angular/forms
+MIT
+
+@angular/localize
+MIT
+
 @angular/platform-browser
 MIT
 
 @angular/router
 MIT
 
-bootstrap
+@ng-bootstrap/ng-bootstrap
 MIT
 The MIT License (MIT)
 
-Copyright (c) 2011-2021 Twitter, Inc.
-Copyright (c) 2011-2021 The Bootstrap Authors
+Copyright (c) 2015-2018 Angular ng-bootstrap team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +40,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+
+@ngrx/effects
+MIT
+
+@ngrx/router-store
+MIT
+
+@ngrx/store
+MIT
+
+@ngrx/store-devtools
+MIT
 
 rxjs
 Apache-2.0
