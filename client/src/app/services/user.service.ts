@@ -8,12 +8,10 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl = 'http://localhost:8000';
-
   constructor(private http: HttpClient) {
   }
 
   fetchUser(user: User): Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${this.baseUrl}/user`, user);
+    return this.http.post<UserResponse>(`/user`, user);
   }
 }
