@@ -33,6 +33,17 @@ app.post('/user', jsonParser, function(req, res) {
     })
 });
 
+app.post('/register', jsonParser, function(req, res) {
+    Users.find({userName: req.body.userName},(err, users) => {
+        if (err || users.length == 0) {
+            Users.create(req.body);
+            res.status(200).send({message: 'Користувача успішно створено', success: true});
+        } else {
+            res.status(200).send({message: 'Користувач вже зареєстрований'});
+        }
+    })
+});
+
 // app.post('/get-list', function(req, res) {
 //     getList().then(images => {
 //         res.status(200).send(images);
@@ -55,7 +66,7 @@ app.get('*', function(req, res) {
     res.sendFile(`${__dirname}/client/dist/public/index.html`);
 });
 
-const port = process.env.port || 8000;
+const port = process.env.port || 8080;
 app.listen(port, () => {
     console.log(`Express server listening on port ${port}`);
 });

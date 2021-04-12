@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 import { AuthState } from 'src/app/interfaces/auth-state';
+import { Tab } from 'src/app/interfaces/tab';
 import { login } from 'src/app/reducers/auth/auth.actions';
+import { selectCurrentPage } from 'src/app/reducers/auth/auth.selectors';
+import { openNotification } from 'src/app/reducers/notification/notification.actions';
 
 @Component({
   selector: 'app-auth',
@@ -11,16 +14,86 @@ import { login } from 'src/app/reducers/auth/auth.actions';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-  form: FormGroup = new FormGroup({
-    login: new FormControl('', [Validators.minLength(3), Validators.required]),
-    password: new FormControl('', [Validators.minLength(3), Validators.required]),
-  });
+  form: FormGroup = new FormGroup({});
+
+  loginTabs = {
+    login: {
+      id: 1,
+      name: 'Введіть дані для авторизації',
+      button: 'Авторизуватись'
+    },
+    register: {
+      id: 2,
+      name: 'Реєстрація нового користувача',
+      button: 'Зареєструватись'
+    },
+    remind: {
+      id: 3,
+      name: 'Забули пароль',
+      button: 'Нагадати пароль'
+    }
+  };
+
+  currentTab = {
+    tab: this.loginTabs.login
+  };
 
   constructor(
     private store$: Store<AuthState>,
   ){}
 
+  get login(): FormControl {
+    return this.form.get('login') as FormControl;
+  }
+
+  get password(): FormControl {
+    return this.form.get('password') as FormControl;
+  }
+
+  get confirmPassword(): FormControl {
+    return this.form.get('confirmPassword') as FormControl;
+  }
+
+  get mail(): FormControl {
+    return this.form.get('mail') as FormControl;
+  }
+
   ngOnInit(): void {
+    this.open(this.loginTabs.login);
+    this.store$.pipe(select(selectCurrentPage))
+      .subscribe((page) => this.open(this.loginTabs[page]));
+  }
+
+  isActive(tab: Tab): boolean {
+    if (!tab) {
+      return false;
+    }
+    return this.currentTab.tab === tab;
+  }
+
+  open(tab: Tab): void {
+    if (!tab) {
+      return;
+    }
+    this.currentTab.tab = tab;
+    this.form.reset();
+    this.form = new FormGroup({
+      login: new FormControl('', [Validators.minLength(3), Validators.required]),
+      password: new FormControl('', [Validators.minLength(3), Validators.required]),
+      confirmPassword: new FormControl('', [Validators.minLength(3), Validators.required]),
+      mail: new FormControl('', [Validators.minLength(3), Validators.email, Validators.required])
+    });
+
+    if (this.isActive(this.loginTabs.login)) {
+      this.form.removeControl('confirmPassword');
+      this.form.removeControl('mail');
+    }
+
+    if (this.isActive(this.loginTabs.remind)) {
+      this.form.removeControl('login');
+      this.form.removeControl('password');
+      this.form.removeControl('confirmPassword');
+    }
   }
 
   submit(): void {
@@ -28,10 +101,30 @@ export class AuthComponent implements OnInit {
       return;
     }
 
-    this.login();
+    switch (this.currentTab.tab) {
+      case this.loginTabs.login:
+        return this.signIn();
+      case this.loginTabs.register:
+        return this.register();
+      case this.loginTabs.remind:
+        return this.remind();
+    }
   }
 
-  login(): void {
-    this.store$.dispatch(login(this.form.value));
+  signIn(): void {
+    console.log(this.form.value);
+    // this.store$.dispatch(login(this.form.value));
+  }
+
+  register(): void {
+    if (this.form.get('password')?.value !== this.form.get('confirmPassword')?.value) {
+      this.store$.dispatch(openNotification({msg: `Паролі не співпадають`, isError: true}));
+    }
+
+    console.log(this.form.value);
+  }
+
+  remind(): void {
+    console.log(this.form.value);
   }
 }

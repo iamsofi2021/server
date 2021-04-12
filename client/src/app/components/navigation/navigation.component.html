@@ -6,5 +6,5 @@
     <input type="search" class="form-control input-navi-search" placeholder="Шукаємо..." aria-label="Пошук"/>
     <button class="btn-navi" appRipple>ПОШУК</button>
   </div>
-  <button type="button" class="btn-navi text-uppercase" routerLinkActive="btn-navi-active" [routerLink]="['auth']" appRipple>{{(login$ | async) || 'ВХІД'}}</button>
+  <button type="button" class="btn-navi text-uppercase me-0" routerLinkActive="btn-navi-active" [routerLink]="['auth']" appRipple>{{(login$ | async) || 'ВХІД'}}</button>
 </div>

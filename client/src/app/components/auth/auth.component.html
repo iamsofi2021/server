@@ -1,12 +1,43 @@
-<h2 class="mb-2">Введіть дані для авторизації</h2>
+<h2 class="mb-2">{{currentTab.tab.name}}</h2>
 <form [formGroup]="form" (ngSubmit)="submit()" (keydown.enter)="submit()" class="authorization">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Логін</label>
-    <input type="email" class="form-control w-50" formControlName="login">
+  <div *ngIf="login" class="mb-3">
+    <label class="form-label">Ваше ім'я</label>
+    <input type="text" class="form-control w-50" [ngClass]="{'is-invalid': login.invalid && (login.touched || login.dirty)}" formControlName="login">
+    <span *ngIf="login.errors?.required" class="invalid-feedback">Пусте поле</span>
+    <span *ngIf="login.errors?.minlength" class="invalid-feedback">Мінімум 3 символи</span>
   </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Пароль</label>
-    <input type="password" class="form-control w-50" formControlName="password">
+  <div *ngIf="password" class="mb-3">
+    <label class="form-label">Ваш пароль</label>
+    <input type="password" class="form-control w-50" [ngClass]="{'is-invalid': password.invalid && (password.touched || password.dirty)}" formControlName="password">
+    <span *ngIf="password.errors?.required" class="invalid-feedback">Пусте поле</span>
+    <span *ngIf="password.errors?.minlength" class="invalid-feedback">Мінімум 3 символи</span>
   </div>
-  <button type="submit" class="btn-navi" appRipple>АВТОРИЗУВАТИСЬ</button>
+  <div *ngIf="confirmPassword" class="mb-3">
+    <label class="form-label">Підтвердження паролю</label>
+    <input type="password" class="form-control w-50" [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.touched || confirmPassword.dirty)}" formControlName="confirmPassword">
+    <span *ngIf="confirmPassword.errors?.required" class="invalid-feedback">Пусте поле</span>
+    <span *ngIf="confirmPassword.errors?.minlength" class="invalid-feedback">Мінімум 3 символи</span>
+  </div>
+  <div *ngIf="mail" class="mb-3">
+    <label class="form-label">Ваш e-mail</label>
+    <input type="text" class="form-control w-50" [ngClass]="{'is-invalid': mail.invalid && (mail.touched || mail.dirty)}" formControlName="mail">
+    <span *ngIf="mail.errors?.required" class="invalid-feedback">Пусте поле</span>
+    <span *ngIf="mail.errors?.minlength" class="invalid-feedback">Мінімум 3 символи</span>
+    <span *ngIf="mail.errors?.email" class="invalid-feedback">Неправильна поштова адреса</span>
+  </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <h5 class="user-select-none">
+      <span *ngIf="!isActive(loginTabs.login)" class="auth-link"
+        (click)="open(this.loginTabs.login)">{{loginTabs.login.button}}</span>
+      <span *ngIf="!isActive(loginTabs.login)"> / </span>
+      <span *ngIf="!isActive(loginTabs.register)" class="auth-link"
+        (click)="open(this.loginTabs.register)">{{loginTabs.register.button}}</span>
+      <span *ngIf="!isActive(loginTabs.register) && !isActive(loginTabs.remind)"> / </span>
+      <span *ngIf="!isActive(loginTabs.remind)" class="auth-link"
+        (click)="open(this.loginTabs.remind)">{{loginTabs.remind.button}}</span>
+    </h5>
+    <div>
+      <button type="submit" class="btn-navi me-0 text-uppercase" appRipple>{{currentTab.tab.button}}</button>
+    </div>
+  </div>
 </form>
