@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 
 import { AuthState } from 'src/app/interfaces/auth-state';
 import { Tab } from 'src/app/interfaces/tab';
-import { login } from 'src/app/reducers/auth/auth.actions';
+import { login, register, remind } from 'src/app/reducers/auth/auth.actions';
 import { selectCurrentPage } from 'src/app/reducers/auth/auth.selectors';
 import { openNotification } from 'src/app/reducers/notification/notification.actions';
 
@@ -112,19 +112,18 @@ export class AuthComponent implements OnInit {
   }
 
   signIn(): void {
-    console.log(this.form.value);
-    // this.store$.dispatch(login(this.form.value));
+    this.store$.dispatch(login(this.form.value));
   }
 
   register(): void {
     if (this.form.get('password')?.value !== this.form.get('confirmPassword')?.value) {
       this.store$.dispatch(openNotification({msg: `Паролі не співпадають`, isError: true}));
+    } else {
+      this.store$.dispatch(register(this.form.value));
     }
-
-    console.log(this.form.value);
   }
 
   remind(): void {
-    console.log(this.form.value);
+    this.store$.dispatch(remind(this.form.value));
   }
 }

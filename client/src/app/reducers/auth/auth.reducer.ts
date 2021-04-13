@@ -9,7 +9,7 @@ const initialState: AuthState = {
   login: '',
   password: '',
   isAdmin: false,
-  currentPage: authActionsType.authPages.login,
+  currentPage: null as any,
 };
 
 export const authReducer = createReducer(

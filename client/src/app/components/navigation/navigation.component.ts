@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
 import { AuthState } from 'src/app/interfaces/auth-state';
+import { User } from 'src/app/interfaces/user';
+import { loginSuccess } from 'src/app/reducers/auth/auth.actions';
 import { selectLogin } from 'src/app/reducers/auth/auth.selectors';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-navigation',
@@ -15,8 +19,13 @@ export class NavigationComponent implements OnInit {
 
   constructor(
     private store$: Store<AuthState>,
+    private localStorageService: LocalStorageService,
   ) { }
 
   ngOnInit(): void {
+    const user = this.localStorageService.getItem('ad_23');
+    if (user) {
+      this.store$.dispatch(loginSuccess(JSON.parse(user) as User));
+    }
   }
 }

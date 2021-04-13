@@ -13,7 +13,7 @@ const jsonParser = bodyParser.json()
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //MongoDb
-const {connect, Users} = require('./mongodb');
+const {connect, Users, Items} = require('./mongodb');
 connect()
     .then(() => { console.log('MongoDb connected') })
     .catch((err) => { console.log(err) });
@@ -34,12 +34,39 @@ app.post('/user', jsonParser, function(req, res) {
 });
 
 app.post('/register', jsonParser, function(req, res) {
-    Users.find({userName: req.body.userName},(err, users) => {
+    Users.find({login: req.body.login},(err, users) => {
         if (err || users.length == 0) {
             Users.create(req.body);
             res.status(200).send({message: 'Користувача успішно створено', success: true});
         } else {
             res.status(200).send({message: 'Користувач вже зареєстрований'});
+        }
+    })
+});
+
+app.post('/remind', jsonParser, function(req, res) {
+    Users.find(req.body,(err, users) => {
+        if (err || users.length == 0) {
+            res.status(200).send({message: 'Користувача не знайдено'});
+        } else {
+            res.status(200).send({message: `Ваш пароль - ${users[0].password}`, success: true});
+        }
+    })
+});
+
+app.post('/add-item', jsonParser, function(req, res) {
+    Users.find({login: req.body.user.login, password: req.body.user.password},(err, users) => {
+        if (err || users.length == 0) {
+            res.status(200).send({message: 'Користувача не знайдено'});
+        } else {
+            if (!users[0].isAdmin) {
+                res.status(200).send({message: 'Користувач не може добавляти пост'});
+            } else {
+                delete req.body.user;
+                Items.create(req.body);
+                res.status(200).send({message: 'Товар успішно додано', success: true});
+            }
+            
         }
     })
 });

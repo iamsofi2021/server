@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+
 import { UserResponse } from '../interfaces/user-response';
 import { User } from '../interfaces/user';
 
@@ -13,5 +14,13 @@ export class UserService {
 
   fetchUser(user: User): Observable<UserResponse> {
     return this.http.post<UserResponse>(`/user`, user);
+  }
+
+  register(user: User): Observable<UserResponse> {
+    return this.http.post<UserResponse>(`/register`, user);
+  }
+
+  remind(mail: string): Observable<UserResponse> {
+    return this.http.post<UserResponse>(`/remind`, { mail });
   }
 }

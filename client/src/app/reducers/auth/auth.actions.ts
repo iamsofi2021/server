@@ -16,14 +16,24 @@ export const loginSuccess = createAction(
   props<{ login: string; password: string; isAdmin?: boolean; }>()
 );
 
+export const register = createAction(
+  '[AUTH] register',
+  props<{ login: string; password: string; confirmPassword: string; mail: string; }>()
+);
+
+export const remind = createAction(
+  '[AUTH] remind',
+  props<{ mail: string; }>()
+);
+
 export const openLoginPage = createAction(
   '[AUTH] open login page',
 );
 
 export const openRegisterPage = createAction(
-  '[AUTH] open login page',
+  '[AUTH] open register page',
 );
 
 export const openRemindPage = createAction(
-  '[AUTH] open login page',
+  '[AUTH] open remind page',
 );
