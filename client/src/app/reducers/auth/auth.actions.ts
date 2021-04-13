@@ -13,7 +13,7 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   '[AUTH] log in success',
-  props<{ login: string; password: string; isAdmin?: boolean; }>()
+  props<{ login: string; password: string; mail?: string; isAdmin?: boolean; }>()
 );
 
 export const register = createAction(

@@ -8,16 +8,18 @@ export const authNode = 'auth';
 const initialState: AuthState = {
   login: '',
   password: '',
+  mail: '',
   isAdmin: false,
   currentPage: null as any,
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(authActionsType.loginSuccess, (state, { login, password, isAdmin }) => ({
+  on(authActionsType.loginSuccess, (state, { login, password, mail, isAdmin }) => ({
     ...state,
     login,
     password,
+    mail: mail || '',
     isAdmin: !!isAdmin,
   })),
   on(authActionsType.openLoginPage, state => ({

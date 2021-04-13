@@ -13,7 +13,6 @@ export class ItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.item);
     const reader = new FileReader();
     reader.readAsDataURL(this.item); 
     reader.onload = (_event) => { 
