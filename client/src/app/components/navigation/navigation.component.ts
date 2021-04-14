@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthState } from 'src/app/interfaces/auth-state';
 import { User } from 'src/app/interfaces/user';
 import { loginSuccess } from 'src/app/reducers/auth/auth.actions';
-import { selectLogin } from 'src/app/reducers/auth/auth.selectors';
+import { selectIsAdmin, selectLogin } from 'src/app/reducers/auth/auth.selectors';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
@@ -15,6 +15,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 })
 export class NavigationComponent implements OnInit {
 
+  public isAdmin$: Observable<boolean> = this.store$.pipe(select(selectIsAdmin));
   public login$: Observable<string> = this.store$.pipe(select(selectLogin));
 
   constructor(

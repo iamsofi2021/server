@@ -7,7 +7,7 @@ import { catchError, delay, filter, map, switchMap } from 'rxjs/operators';
 
 import { ModalComponent } from './components/modal/modal.component';
 import { User } from './interfaces/user';
-import { login, loginSuccess, openLoginPage, register, remind } from './reducers/auth/auth.actions';
+import { exit, login, loginSuccess, openLoginPage, register, remind } from './reducers/auth/auth.actions';
 import { openNotification, openNotificationSuccessful } from './reducers/notification/notification.actions';
 import { ErrorService } from './services/error.service';
 import { LocalStorageService } from './services/local-storage.service';
@@ -91,6 +91,19 @@ export class AppEffects {
         openNotification({ msg: res.message as string, isError: !res.success }),
         openLoginPage(),
       ]),
+      catchError(err => of(this.errorService.handleError(err)))
+    );
+  });
+
+  exit$ = createEffect((): any => {
+    return this.actions$.pipe(
+      ofType(exit),
+      filter(() => this.isClosed),
+      map(() => {
+        this.router.navigate(['/']);
+        this.localStorageService.clear();
+        return openNotification({ msg: `Ви успішно розлогувались!` });
+      }),
       catchError(err => of(this.errorService.handleError(err)))
     );
   });

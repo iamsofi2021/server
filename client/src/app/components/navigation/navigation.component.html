@@ -1,10 +1,11 @@
 <div class="d-flex flex-wrap mb-4 navigation">
   <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }" appRipple>АКСЕСУАРИ</button>
   <button type="button" class="btn-navi" routerLinkActive="btn-navi-active" [routerLink]="['order']" appRipple>ЗАМОВИТИ</button>
-  <button type="button" class="btn-navi me-auto" routerLinkActive="btn-navi-active" [routerLink]="['contacts']" appRipple>КОНТАКТИ</button>
+  <button type="button" class="btn-navi me-auto" [ngClass]="{'me-auto': !(isAdmin$ | async)}" routerLinkActive="btn-navi-active" [routerLink]="['contacts']" appRipple>КОНТАКТИ</button>
+  <button *ngIf="isAdmin$ | async" type="button" class="btn-navi me-auto" routerLinkActive="btn-navi-active" [routerLink]="['add']" appRipple>ДОДАТИ</button>
   <div class="d-flex input-group w-auto position-static">
     <input type="search" class="form-control input-navi-search" placeholder="Шукаємо..." aria-label="Пошук"/>
     <button class="btn-navi" appRipple>ПОШУК</button>
   </div>
-  <button type="button" class="btn-navi text-uppercase me-0" routerLinkActive="btn-navi-active" [routerLink]="['auth']" appRipple>{{(login$ | async) || 'ВХІД'}}</button>
+  <button type="button" class="btn-navi text-uppercase me-0" routerLinkActive="btn-navi-active" [routerLink]="(login$ | async) ? ['/profile'] : ['auth']" appRipple>{{(login$ | async) || 'ВХІД'}}</button>
 </div>

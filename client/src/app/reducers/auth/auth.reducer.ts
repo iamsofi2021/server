@@ -34,4 +34,11 @@ export const authReducer = createReducer(
     ...state,
     currentPage: authActionsType.authPages.remind
   })),
+  on(authActionsType.exit, state => ({
+    ...state,
+    login: '',
+    password: '',
+    mail: '',
+    isAdmin: false,
+  })),
 );

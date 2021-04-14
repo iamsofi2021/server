@@ -12,16 +12,14 @@ export class LocalStorageService {
     if (!key || !localStorage.getItem(key)) {
       return '';
     }
-    return CryptoTs.AES.decrypt(localStorage.getItem(key) as string, `${process.env.superman}`).toString(CryptoTs.enc.Utf8);
-    // return CryptoTs.AES.decrypt(localStorage.getItem(key) as string, 'iamsofi').toString(CryptoTs.enc.Utf8);
+    return CryptoTs.AES.decrypt(localStorage.getItem(key) as string, 'iamsofi').toString(CryptoTs.enc.Utf8);
   }
 
   setItem(key: string, value: string): void {
     if (!key || !value) {
       return;
     }
-    localStorage.setItem(key, CryptoTs.AES.encrypt(value, `${process.env.superman}`).toString());
-    // localStorage.setItem(key, CryptoTs.AES.encrypt(value, 'iamsofi').toString());
+    localStorage.setItem(key, CryptoTs.AES.encrypt(value, 'iamsofi').toString());
   }
 
   removeItem(key: string): void {

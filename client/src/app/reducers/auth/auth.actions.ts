@@ -26,6 +26,10 @@ export const remind = createAction(
   props<{ mail: string; }>()
 );
 
+export const exit = createAction(
+  '[AUTH] exit',
+);
+
 export const openLoginPage = createAction(
   '[AUTH] open login page',
 );

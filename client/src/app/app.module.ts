@@ -21,6 +21,8 @@ import { AuthComponent } from './components/auth/auth.component';
 import { AppEffects } from './app.effects';
 import { ModalComponent } from './components/modal/modal.component';
 import { RippleDirective } from './directives/ripple.directive';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AddComponent } from './components/add/add.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { RippleDirective } from './directives/ripple.directive';
     OrderComponent,
     ContactsComponent,
     AuthComponent,
+    ProfileComponent,
+    AddComponent,
     ModalComponent,
   ],
   imports: [
