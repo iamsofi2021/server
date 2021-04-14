@@ -6,6 +6,7 @@ import { AuthState } from '../../interfaces/auth-state';
 export const authNode = 'auth';
 
 const initialState: AuthState = {
+  _id: '',
   login: '',
   password: '',
   mail: '',
@@ -15,8 +16,9 @@ const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(authActionsType.loginSuccess, (state, { login, password, mail, isAdmin }) => ({
+  on(authActionsType.loginSuccess, (state, { _id, login, password, mail, isAdmin }) => ({
     ...state,
+    _id,
     login,
     password,
     mail: mail || '',
@@ -36,6 +38,7 @@ export const authReducer = createReducer(
   })),
   on(authActionsType.exit, state => ({
     ...state,
+    _id: '',
     login: '',
     password: '',
     mail: '',

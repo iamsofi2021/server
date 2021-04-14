@@ -54,6 +54,17 @@ app.post('/remind', jsonParser, function(req, res) {
     })
 });
 
+// app.post('/update-user', jsonParser, function(req, res) {
+//     Users.find(req.body,(err, users) => {
+//         if (err || users.length == 0) {
+//             res.status(200).send({message: 'Користувача не знайдено'});
+//         } else {
+//             Users.updateOne()
+//             res.status(200).send({message: `Ваш пароль - ${users[0].password}`, success: true});
+//         }
+//     })
+// });
+
 app.post('/add-item', jsonParser, function(req, res) {
     Users.find({login: req.body.user.login, password: req.body.user.password},(err, users) => {
         if (err || users.length == 0) {

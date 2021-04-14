@@ -7,6 +7,7 @@ import { ContactsComponent } from './components/contacts/contacts.component';
 import { ItemsComponent } from './components/items/items.component';
 import { OrderComponent } from './components/order/order.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: ItemsComponent },
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'contacts', component: ContactsComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'add', component: AddComponent },
+  { path: 'add', component: AddComponent, canActivate: [AuthGuardService] },
   { path: '**', redirectTo: '/' }
 ];
 

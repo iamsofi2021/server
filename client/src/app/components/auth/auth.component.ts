@@ -6,7 +6,7 @@ import { AuthState } from 'src/app/interfaces/auth-state';
 import { Tab } from 'src/app/interfaces/tab';
 import { login, register, remind } from 'src/app/reducers/auth/auth.actions';
 import { selectCurrentPage } from 'src/app/reducers/auth/auth.selectors';
-import { openNotification } from 'src/app/reducers/notification/notification.actions';
+import { showSnackbar } from 'src/app/reducers/snackbar/snackbar.actions';
 
 @Component({
   selector: 'app-auth',
@@ -117,7 +117,7 @@ export class AuthComponent implements OnInit {
 
   register(): void {
     if (this.form.get('password')?.value !== this.form.get('confirmPassword')?.value) {
-      this.store$.dispatch(openNotification({msg: `Паролі не співпадають`, isError: true}));
+      this.store$.dispatch(showSnackbar({msg: `Паролі не співпадають`, isError: true}));
     } else {
       this.store$.dispatch(register(this.form.value));
     }

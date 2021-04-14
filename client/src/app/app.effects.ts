@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, delay, filter, map, switchMap } from 'rxjs/operators';
+import { LoginState } from './interfaces/login-state';
+import { RegState } from './interfaces/reg-state';
 
-import { ModalComponent } from './components/modal/modal.component';
 import { User } from './interfaces/user';
 import { exit, login, loginSuccess, openLoginPage, register, remind } from './reducers/auth/auth.actions';
-import { openNotification, openNotificationSuccessful } from './reducers/notification/notification.actions';
+import { hideSnackbar, showSnackbar } from './reducers/snackbar/snackbar.actions';
 import { ErrorService } from './services/error.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { UserService } from './services/user.service';
@@ -20,42 +20,23 @@ export class AppEffects {
     private actions$: Actions,
     private userService: UserService,
     private errorService: ErrorService,
-    private modalService: NgbModal,
     private router: Router,
     private localStorageService: LocalStorageService,
   ) { }
-
-  openNotification$ = createEffect((): any => {
-    return this.actions$.pipe(
-      ofType(openNotification),
-      delay(100),
-      map(action => {
-        const modalRef = this.modalService.open(ModalComponent, { backdrop: false });
-        this.isClosed = false;
-        modalRef.result.then(() => {
-          this.isClosed = true;
-        });
-        modalRef.componentInstance.message = action.msg;
-        modalRef.componentInstance.timeOut = true;
-        modalRef.componentInstance.isErrorMsg = action.isError;
-        return openNotificationSuccessful();
-      })
-    );
-  });
 
   login$ = createEffect((): any => {
     return this.actions$.pipe(
       ofType(login),
       filter(() => this.isClosed),
-      switchMap(({ login, password }) => this.userService.fetchUser({ login, password })),
+      switchMap((action: LoginState) => this.userService.fetchUser(action)),
       switchMap(res => {
         if (res.message) {
-          return [openNotification({ msg: res.message, isError: true })];
+          return [showSnackbar({ msg: res.message, isError: true })];
         } else {
           this.router.navigate(['/']);
           this.localStorageService.setItem('ad_23', JSON.stringify(res.user));
           return [
-            openNotification({ msg: `Вітаємо ${res.user?.login} на нашому сайті!` }),
+            showSnackbar({ msg: `Вітаємо ${res.user?.login} на нашому сайті!` }),
             loginSuccess(res.user as User)];
         }
       }),
@@ -70,10 +51,10 @@ export class AppEffects {
       switchMap(({ mail }) => this.userService.remind(mail)),
       switchMap(res => {
         if (!res.success) {
-          return [openNotification({ msg: res.message as string, isError: true })];
+          return [showSnackbar({ msg: res.message as string, isError: true })];
         } else {
           return [
-            openNotification({ msg: res.message as string }),
+            showSnackbar({ msg: res.message as string }),
             openLoginPage(),
           ];
         }
@@ -85,10 +66,9 @@ export class AppEffects {
   register$ = createEffect((): any => {
     return this.actions$.pipe(
       ofType(register),
-      filter(() => this.isClosed),
-      switchMap((action: User) => this.userService.register(action)),
+      switchMap((action: RegState) => this.userService.register(action)),
       switchMap(res => [
-        openNotification({ msg: res.message as string, isError: !res.success }),
+        showSnackbar({ msg: res.message as string, isError: !res.success }),
         openLoginPage(),
       ]),
       catchError(err => of(this.errorService.handleError(err)))
@@ -98,12 +78,20 @@ export class AppEffects {
   exit$ = createEffect((): any => {
     return this.actions$.pipe(
       ofType(exit),
-      filter(() => this.isClosed),
       map(() => {
         this.router.navigate(['/']);
         this.localStorageService.clear();
-        return openNotification({ msg: `Ви успішно розлогувались!` });
+        return showSnackbar({ msg: `Ви успішно розлогувались!` });
       }),
+      catchError(err => of(this.errorService.handleError(err)))
+    );
+  });
+
+  showSnackbar$ = createEffect((): any => {
+    return this.actions$.pipe(
+      ofType(showSnackbar),
+      delay(3990),
+      map(() => hideSnackbar()),
       catchError(err => of(this.errorService.handleError(err)))
     );
   });

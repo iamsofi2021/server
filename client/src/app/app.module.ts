@@ -19,7 +19,6 @@ import { reducers, metaReducers } from './reducers';
 import { environment } from '../environments/environment';
 import { AuthComponent } from './components/auth/auth.component';
 import { AppEffects } from './app.effects';
-import { ModalComponent } from './components/modal/modal.component';
 import { RippleDirective } from './directives/ripple.directive';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AddComponent } from './components/add/add.component';
@@ -36,7 +35,6 @@ import { AddComponent } from './components/add/add.component';
     AuthComponent,
     ProfileComponent,
     AddComponent,
-    ModalComponent,
   ],
   imports: [
     FormsModule,

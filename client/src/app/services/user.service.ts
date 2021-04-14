@@ -3,29 +3,30 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { UserResponse } from '../interfaces/user-response';
-import { User } from '../interfaces/user';
+import { RegState } from '../interfaces/reg-state';
+import { LoginState } from '../interfaces/login-state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl = 'http://localhost:8080';
+  // baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
   }
 
-  fetchUser(user: User): Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${this.baseUrl}/user`, user);
-    return this.http.post<UserResponse>(`/user`, user);
+  fetchUser({ login, password }: LoginState): Observable<UserResponse> {
+    // return this.http.post<UserResponse>(`${this.baseUrl}/user`, { login, password });
+    return this.http.post<UserResponse>(`/user`, { login, password });
   }
 
-  register(user: User): Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${this.baseUrl}/register`, user);
-    return this.http.post<UserResponse>(`/register`, user);
+  register({ login, password, confirmPassword, mail }: RegState): Observable<UserResponse> {
+    // return this.http.post<UserResponse>(`${this.baseUrl}/register`, { login, password, confirmPassword, mail });
+    return this.http.post<UserResponse>(`/register`, { login, password, confirmPassword, mail });
   }
 
   remind(mail: string): Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${this.baseUrl}/remind`, { mail });
+    // return this.http.post<UserResponse>(`${this.baseUrl}/remind`, { mail });
     return this.http.post<UserResponse>(`/remind`, { mail });
   }
 }

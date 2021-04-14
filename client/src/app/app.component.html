@@ -2,4 +2,5 @@
   <img src="../../../assets/logo.webp" class="logo" alt="">
   <app-navigation></app-navigation>
   <router-outlet></router-outlet>
+  <div class="snackbar" [ngClass]="{'msg-error': (isError$ | async), 'show': (msg$ | async)}">{{msg$ | async}}</div>
 </div>
