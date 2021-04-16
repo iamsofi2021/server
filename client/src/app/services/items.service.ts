@@ -21,6 +21,6 @@ export class ItemsService {
 
   getItems(): Observable<ItemResponse> {
     // return this.http.post<ItemResponse>(`${this.baseUrl}/get-list`, {});
-    return this.http.post<ItemResponse>(`/upload`, {});
+    return this.http.post<ItemResponse>(`/get-list`, {});
   }
 }
