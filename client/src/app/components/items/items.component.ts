@@ -1,5 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+
+import { ItemsListState } from 'src/app/interfaces/items-list-state';
+import { selectItems } from 'src/app/reducers/items/items.selectors';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { getItems } from 'src/app/reducers/items/items.actions';
+import { ItemState } from 'src/app/interfaces/item-state';
 
 @Component({
   selector: 'app-items',
@@ -7,40 +14,18 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent implements OnInit {
+  public list$: Observable<ItemState[]> = this.store$.pipe(select(selectItems));
 
-  item: any;
-  item2: any;
-  images: any;
+  constructor(
+    private store$: Store<ItemsListState>,
+    private localStorageService: LocalStorageService,
+  ) { }
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit() {
-
+  ngOnInit(): void {
+    this.store$.dispatch(getItems());
   }
 
-  test() {
-    this.http.post<any>('/users', {}).subscribe(users => console.log(users));
-  }
-
-  handleFileInput(e: Event) {
-    const fileInput: HTMLInputElement = e.target as HTMLInputElement;
-    this.item = Array.from(fileInput.files as FileList)[0];
-  }
-
-  uploadFileToActivity() {
-    const formData: FormData = new FormData();
-    formData.append('image', this.item, this.item.name);
-
-    this.http.post<any>('/upload', formData).subscribe((response) => {
-      console.log('response received is ', response);
-  });
-  }
-
-  fetch() {
-    this.http.post<any>('/get-list', {}).subscribe(images => this.images = images);
-  }
-
-  show() {
-    this.http.post<any>('/get-image', {key: this.images[0].Key}).subscribe(item => this.item2 = item);
+  source(imageName: string): string {
+    return `https://sofi-images.s3.us-east-2.amazonaws.com/${imageName}`;
   }
 }

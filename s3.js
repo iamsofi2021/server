@@ -8,6 +8,12 @@ aws.config.update({
     region: process.env.region
 });
 
+// aws.config.update({
+//     accessKeyId: 'AKIASN3ESZAQDZ3P3X4P',
+//     secretAccessKey: '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',
+//     region: 'us-east-2'
+// });
+
 const s3 = new aws.S3();
 const upload = multer({
     fileFilter: (req, file, cb) => {
@@ -21,7 +27,7 @@ const upload = multer({
     storage: multerS3({
         acl: 'public-read',
         s3,
-        bucket: process.env.s3_bucketname,
+        bucket: 'sofi-images',
         key: function (req, file, cb) {
             req.file = Date.now() + file.originalname;
             cb(null, Date.now() + file.originalname);

@@ -8,11 +8,11 @@ export enum authPages {
 
 export const login = createAction(
   '[AUTH] log in',
-  props<{ login: string; password: string }>()
+  props<{ login: string; password: string; }>()
 );
 
-export const loginSuccess = createAction(
-  '[AUTH] log in success',
+export const updateUserState = createAction(
+  '[AUTH] update user state',
   props<{ _id: string; login: string; password: string; mail?: string; isAdmin?: boolean; }>()
 );
 
@@ -24,6 +24,11 @@ export const register = createAction(
 export const remind = createAction(
   '[AUTH] remind',
   props<{ mail: string; }>()
+);
+
+export const updateUser = createAction(
+  '[AUTH] update user',
+  props<{ _id: string; login: string; password: string; mail: string; }>()
 );
 
 export const exit = createAction(

@@ -16,7 +16,7 @@ const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(authActionsType.loginSuccess, (state, { _id, login, password, mail, isAdmin }) => ({
+  on(authActionsType.updateUserState, (state, { _id, login, password, mail, isAdmin }) => ({
     ...state,
     _id,
     login,

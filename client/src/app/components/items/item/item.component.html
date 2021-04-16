@@ -1,1 +1,8 @@
-<img [src]="url" class="small-picture">
+<div class="card" style="width: 18rem;">
+    <img [src]="source" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-date">{{item.createdDate}}</h5>
+        <h3 class="card-title">{{item.name}}</h3>
+        <p class="card-text text-end">{{item.price}} грн.</p>
+    </div>
+</div>

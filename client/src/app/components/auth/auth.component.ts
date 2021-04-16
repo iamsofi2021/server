@@ -116,7 +116,7 @@ export class AuthComponent implements OnInit {
   }
 
   register(): void {
-    if (this.form.get('password')?.value !== this.form.get('confirmPassword')?.value) {
+    if (this.password?.value !== this.confirmPassword?.value) {
       this.store$.dispatch(showSnackbar({msg: `Паролі не співпадають`, isError: true}));
     } else {
       this.store$.dispatch(register(this.form.value));

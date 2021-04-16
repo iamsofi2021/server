@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Item } from 'src/app/interfaces/item';
+import { ItemState } from 'src/app/interfaces/item-state';
 
 @Component({
   selector: 'app-item',
@@ -7,17 +9,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ItemComponent implements OnInit {
 
-  @Input() item: File = {} as File;
-  url: string | ArrayBuffer | null = '';
+  @Input() item: ItemState = {} as ItemState;
+  source = 'https://sofi-images.s3.us-east-2.amazonaws.com/';
 
   constructor() { }
 
-  ngOnInit() {
-    const reader = new FileReader();
-    reader.readAsDataURL(this.item); 
-    reader.onload = (_event) => { 
-        this.url = reader.result; 
-    }
+  ngOnInit(): void {
+    this.source += this.item.image;
   }
 
 }

@@ -41,7 +41,7 @@ const ItemsSchema = new mongo.Schema({
         type: String,
         required: true,
     },
-    createDate: {
+    createdDate: {
         type: String,
         required: true,
     },

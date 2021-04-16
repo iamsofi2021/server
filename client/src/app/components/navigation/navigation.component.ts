@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AuthState } from 'src/app/interfaces/auth-state';
 import { User } from 'src/app/interfaces/user';
-import { loginSuccess } from 'src/app/reducers/auth/auth.actions';
+import { updateUserState } from 'src/app/reducers/auth/auth.actions';
 import { selectIsAdmin, selectLogin } from 'src/app/reducers/auth/auth.selectors';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
@@ -26,7 +26,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     const user = this.localStorageService.getItem('ad_23');
     if (user) {
-      this.store$.dispatch(loginSuccess(JSON.parse(user) as User));
+      this.store$.dispatch(updateUserState(JSON.parse(user) as User));
     }
   }
 }
